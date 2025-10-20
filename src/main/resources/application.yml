@@ -1,0 +1,24 @@
+spring:
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/nimble_db}
+    username: ${SPRING_DATASOURCE_USERNAME:nimble_user}
+    password: ${SPRING_DATASOURCE_PASSWORD:nimble_pass}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+
+server:
+  port: 8080
+
+logging:
+  level:
+    root: INFO
+    org.springframework.security: INFO
+    com.nimble.gateway: DEBUG
+
+jwt:
+  secret: f6c7a5a8d1b24c0bb1d0a52e3aa9e82d58f3a7f9a1b2c3d4e5f6a7b8c9d0e1f2
+  expirationMs: 3600000
