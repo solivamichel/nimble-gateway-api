@@ -1,6 +1,7 @@
 package com.nimble.gateway.entity;
 
 import com.nimble.gateway.enums.ChargeStatus;
+import com.nimble.gateway.enums.PaymentMethod;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -31,4 +32,9 @@ public class Charge {
     private ChargeStatus status = ChargeStatus.PENDING;
 
     private OffsetDateTime paidAt;
+
+    @Enumerated(EnumType.STRING)
+    private PaymentMethod paymentMethod;
+
+    private String paidByCpf; // cpf de quem efetuou o pagamento
 }
