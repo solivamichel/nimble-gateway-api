@@ -122,4 +122,26 @@ public class ChargeController {
     ) {
         return ResponseEntity.ok(chargeService.listReceived(principal.getName(), status));
     }
+
+    @PostMapping("/{id}/cancel")
+    @Operation(
+            summary = "Cancelar cobrança",
+            description = """
+            Cancela uma cobrança.
+            - **PENDING**: altera para CANCELED.
+            - **PAID + BALANCE**: estorna (debita originador, credita pagador) e cancela.
+            - **PAID + CARD**: consulta autorizador externo; se autorizado, reverte crédito do originador e cancela.
+            Apenas o **originador** pode cancelar.
+            """,
+            security = @SecurityRequirement(name = "bearerAuth"),
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Cobrança cancelada"),
+                    @ApiResponse(responseCode = "401", description = "Não autenticado", content = @Content),
+                    @ApiResponse(responseCode = "404", description = "Cobrança/usuário não encontrado", content = @Content),
+                    @ApiResponse(responseCode = "422", description = "Regra de negócio (não é originador, já cancelada, saldo insuficiente, autorizador recusou, etc.)", content = @Content)
+            }
+    )
+    public ResponseEntity<ChargeResponse> cancel(@PathVariable Long id, Principal principal) {
+        return ResponseEntity.ok(chargeService.cancel(id, principal.getName()));
+    }
 }

@@ -9,6 +9,10 @@ import java.util.List;
 public interface ChargeService {
 
     ChargeResponse create(String originatorCpf, ChargeRequest request);
+
     List<ChargeResponse> listSent(String originatorCpf, ChargeStatus status);
+
     List<ChargeResponse> listReceived(String recipientCpf, ChargeStatus status);
+
+    ChargeResponse cancel(Long chargeId, String requesterCpf);
 }
