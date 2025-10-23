@@ -41,11 +41,29 @@ dependencies {
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-
 	testImplementation 'com.github.tomakehurst:wiremock-jre8:2.35.2'
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+jacocoTestReport {
+	dependsOn test
+	reports {
+		xml.required = true
+		html.required = true
+	}
+}
+
+jacocoTestCoverageVerification {
+	violationRules {
+		rule {
+			limit {
+				minimum = 0.50
+			}
+		}
+	}
+}
+
+check.dependsOn jacocoTestReport, jacocoTestCoverageVerification
