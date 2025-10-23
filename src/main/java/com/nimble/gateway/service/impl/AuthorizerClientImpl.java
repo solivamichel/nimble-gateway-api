@@ -27,7 +27,7 @@ public class AuthorizerClientImpl implements AuthorizerClient {
             if (response == null) return false;
 
 
-            /* Aqui acesso o data.authorized
+            /* acesso o data.authorized
                 {
                 "status": "success",
                 "data": {
